@@ -15,5 +15,5 @@ class Order:
     def total_price(self):
         return sum(item.price*quantity for item,quantity in self.items.items())
     
-    def clear():
+    def clear(self):
         self.items={}

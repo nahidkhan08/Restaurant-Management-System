@@ -17,8 +17,8 @@ class Menu:
             self.items.append(item)
             print(f'{item.name} is added!!!')
 
-    def remove_item(self, item_name):
-        found=self.find_item(item_name.name)
+    def remove_item(self, item):
+        found=self.find_item(item)
         if found:
             self.items.remove(found)
             print("Item is deleted")

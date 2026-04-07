@@ -3,7 +3,7 @@
 #admin
 
 from abc import ABC
-
+from order import Order
 class User(ABC):
     def __init__(self, name, phone, email, address):
         self.name=name
@@ -30,14 +30,17 @@ class Customer(User):
                 print("Item is added")
         else:
             print("Item is not found")
-    
+
     def show_cart(self):
         print("*****View Cart*****")
         print("Food Name\tPrice\tQuantity")
         for item,quantity in self.cart.items.items():
             print(f'{item.name}\t\t{item.price}\t{quantity}')
         print(f'Total price: {self.cart.total_price}')
-
+    
+    def pay_bill(self):
+        print(f'Your {self.cart.total_price} Taka bill is paid')
+        self.cart.clear()
 
 
 class Employee(User):
