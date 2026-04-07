@@ -10,7 +10,36 @@ class User(ABC):
         self.phone=phone
         self.email=email
         self.address=address
+
+class Customer(User):
+    def __init__(self, name, phone, email, address):
+        super().__init__(name, phone, email, address)
+        self.cart= Order()
     
+    def view_menu(self, restaurant):
+        restaurant.menu.show_food()
+    
+    def add_to_cart(self, restaurant, order_item, quantity):
+        item=restaurant.menu.find_item(order_item)
+        if item:
+            if quantity > item.quantity:
+                print("Item quantity exceeded.")
+            else:
+                item.quantity=quantity
+                self.cart.add_item(item)
+                print("Item is added")
+        else:
+            print("Item is not found")
+    
+    def show_cart(self):
+        print("*****View Cart*****")
+        print("Food Name\tPrice\tQuantity")
+        for item,quantity in self.cart.items.items():
+            print(f'{item.name}\t\t{item.price}\t{quantity}')
+        print(f'Total price: {self.cart.total_price}')
+
+
+
 class Employee(User):
     def __init__(self, name, phone, email, address, age, designation, salary):
         super().__init__(name, phone, email, address)
@@ -28,27 +57,49 @@ class Admin(User):
     def view_employee(self, restaurant):
         restaurant.view_employee()
     
+    def add_new_item(self, restaurant, item):
+        restaurant.menu.add_item(item)
     
-
-class Restaurant:
-    def __init__(self, name):
-        self.name=name
-        self.employees=[] #this part will work like a database
+    def delete_item(self, restaurant,item):
+        restaurant.menu.remove_item(item)
     
-    def add_employee(self, employee):
-        self.employees.append(employee)
-        print(f'{employee.name} is added!!!')
+    def show_item(self, restaurant):
+        restaurant.menu.show_food()
     
-    def view_employee(self):
-        print("Employee List:")
-        for emp in self.employees:
-            print(f'Name: {emp.name}, Phone: {emp.phone}, Email: {emp.email}, Address: {emp.address}')
+    
+       
 
-        
+# adm = Admin("Rahim", '123456789', 'rahim@gmail.com', 'Dhaka')
+# restaurant=Restaurant("Road Side Kitchen")
+# em=Employee('Raj', '12349828', 'raj23@gmail.com', 'Savar', '23', 'Sales', '21000')
+# adm.add_employee(restaurant,em)
 
-adm = Admin("Rahim", '123456789', 'rahim@gmail.com', 'Dhaka')
-restaurant=Restaurant("Road Side Kitchen")
-em=Employee('Raj', '12349828', 'raj23@gmail.com', 'Savar', '23', 'Sales', '21000')
-adm.add_employee(restaurant,em)
+# fditem=FoodItem('Pizza', 545, 4)
+# fditem2=FoodItem('Pizza', 545, 4)
+# fditem3=FoodItem('Burger', 325, 4)
+# menu=Menu()
+# menu.add_item(fditem)
+# menu.add_item(fditem2)
+# menu.add_item(fditem3)
+# menu.show_food()
+
+# fditem=FoodItem('Pizza', 545, 4)
+# fditem2=FoodItem('Burger', 320, 7)
+# fditem3=FoodItem('Pasta', 120, 12)
+# restaurant=Restaurant("Road Side Kitchen")
+# adm = Admin("Rahim", '123456789', 'rahim@gmail.com', 'Dhaka')
+# adm.add_new_item(restaurant,fditem)
+# adm.add_new_item(restaurant,fditem2)
+# adm.add_new_item(restaurant,fditem3)
+# adm.show_item(restaurant)
+
+# customer1=Customer("Nahid", '0135272782', 'nahid@gmail.com', 'Dhaka')
+# customer1.view_menu(restaurant)
+
+# food_item=input("Enter Food Item: ")
+# food_quantity=int(input("Enter Food Quantity: "))
+# customer1.add_to_cart(restaurant, food_item, food_quantity)
+# customer1.show_cart()
+
 
 
